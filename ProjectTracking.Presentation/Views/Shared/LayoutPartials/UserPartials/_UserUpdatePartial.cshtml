@@ -1,0 +1,71 @@
+﻿@using ProjectTracking.DataAccess.Entites.Classes.DbClasses.UserClasses;
+@model User
+
+<div class="modal fade" id="userUpdateModal-@Model.Id" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Kullanıcı Güncelle</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+
+            </div>
+            <form asp-controller="User" asp-action="Update" method="post">
+                <input type="hidden" asp-for="Id" />
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col">
+                            <div class="mb-3 row">
+                                <label class="col form-label" asp-for="Name"></label>
+                                <div class="col-lg-8">
+                                    <input type="text" class="form-control" placeholder="Adınızı giriniz" required="" asp-for="Name">
+                                    <span asp-validation-for="Name" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="mb-3 row">
+                                <label class="col-lg-4 col-form-label" asp-for="Surname"></label>
+                                <div class="col-lg-8">
+                                    <input type="text" class="form-control" placeholder="Soyadınızı giriniz" asp-for="Surname">
+                                    <span asp-validation-for="Surname" class="text-danger"></span>
+                                </div>
+                            </div>
+
+                            <div class="mb-3 row">
+                                <label class="col-lg-4 col-form-label" asp-for="Email"></label>
+                                <div class="col-lg-8">
+                                    <input asp-for="Email" type="email" class="form-control" placeholder="Mail adresinizi giriniz">
+                                    <span asp-validation-for="Email" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="mb-3 row">
+                                <label class="col-lg-4 col-form-label" asp-for="Password"></label>
+                                <div class="col-lg-8">
+                                    <input asp-for="Password" type="password" class="form-control" placeholder="Şifre giriniz">
+                                    <span asp-validation-for="Password" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="mb-3 row">
+                                <label class="col-lg-4 col-form-label" asp-for="PasswordAgain"></label>
+                                <div class="col-lg-8">
+                                    <input asp-for="PasswordAgain" type="password" class="form-control" id="validationCustom03" placeholder="Şifrenizi tekrar giriniz" required="">
+                                    <span asp-validation-for="PasswordAgain" class="text-danger"></span>
+                                </div>
+                                <div class="col-lg-8">
+                                    <span class="form-check d-inline-block">
+                                        <input type="checkbox" class="form-check-input" asp-for="Active" />@Html.DisplayNameFor(model => model.Active)
+                                    </span>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">İptal</button>
+                    <button type="submit" class="btn btn-primary" id="btnUpdate">Kaydet</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+

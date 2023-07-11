@@ -1,0 +1,86 @@
+﻿@using ProjectTracking.DataAccess.Entites.Classes.DbClasses.RequestClasses;
+@model IEnumerable<Requisition>
+@{
+    ViewData["Title"] = "PendingRequest";
+}
+
+<div class="page-titles">
+    <ol class="breadcrumb">
+        <li><h5 class="bc-title">Talep</h5></li>
+        <li class="breadcrumb-item">
+            <a asp-controller="Home" asp-action="Index">
+                <svg width="17" height="17" viewbox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M2.125 6.375L8.5 1.41667L14.875 6.375V14.1667C14.875 14.5424 14.7257 14.9027 14.4601 15.1684C14.1944 15.4341 13.8341 15.5833 13.4583 15.5833H3.54167C3.16594 15.5833 2.80561 15.4341 2.53993 15.1684C2.27426 14.9027 2.125 14.5424 2.125 14.1667V6.375Z" stroke="#2C2C2C" stroke-linecap="round" stroke-linejoin="round"></path>
+                    <path d="M6.375 15.5833V8.5H10.625V15.5833" stroke="#2C2C2C" stroke-linecap="round" stroke-linejoin="round"></path>
+                </svg>
+                Anasayfa
+            </a>
+        </li>
+        <li class="breadcrumb-item active"><a asp-controller="Mission" asp-action="Index">Görev</a></li>
+    </ol>
+    <a class="text-primary fs-13" data-bs-toggle="offcanvas" asp-controller="Mission" asp-action="Add" role="button" aria-controls="offcanvasExample1">+ Görev Ekle</a>
+</div>
+<div class="row">
+    <div class="col">
+        <div class="table-responsive mt-3">
+            <table id="myTable" class="display" style="min-width: 845px">
+                <thead>
+                    <tr>
+                        <th>
+                            <div class="form-check custom-checkbox">
+                                <input type="checkbox" class="form-check-input" id="checkAll" required="">
+                                <label class="form-check-label" for="checkAll"></label>
+                            </div>
+                        </th>
+                        <th>@Html.DisplayNameFor(t => t.Id)</th>
+                        <th>@Html.DisplayNameFor(t => t.RequisitionName)</th>
+                        <th>@Html.DisplayNameFor(t => t.StartDate)</th>
+                        <th>@Html.DisplayNameFor(t => t.EndDate)</th>
+                        <th>@Html.DisplayNameFor(t => t.RequisitionDescription)</th>
+                        <th>@Html.DisplayNameFor(t => t.UserId)</th>
+                        <th>@Html.DisplayNameFor(t => t.Status)</th>
+                        <th>Görev Oluştur</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                <div class="form-check custom-checkbox">
+                                    <input type="checkbox" class="form-check-input" id="customCheckBox3" required="">
+                                    <label class="form-check-label" for="customCheckBox3"></label>
+                                </div>
+                            </td>
+                            <td>@item.Id</td>
+                            <td><div class="products"><h6>@item.RequisitionName</h6></div></td>
+                            <td><span>@item.StartDate.ToShortDateString()</span></td>
+                            <td><span>@item.EndDate.ToShortDateString()</span></td>
+                            <td><div class="products"><h6>@item.RequisitionDescription</h6></div></td>
+                            <td>@item.UserId</td>
+                            <td>
+                                @switch (item.Status)
+                                {
+                                    case ProjectTracking.DataAccess.Entites.Enums.RequisitionStatus.AssignedTo:
+                                        <span class="badge light badge-success">@item.Status</span>
+                                        break;
+                                    case ProjectTracking.DataAccess.Entites.Enums.RequisitionStatus.Pending:
+                                        <span class="badge light badge-warning">@item.Status</span>
+                                        break;
+                                }
+                            </td>
+                            <td>
+                                <div class="d-flex">
+                                    <button type="button" class="btn btn-primary mb-2" data-bs-toggle="modal" data-bs-target="@("#UpdateRequisition-" + item.Id)" data-bs-url="@Url.Action($"Update/{item.Id}")"><i class="fa fa-solid fa-pencil"></i></button>
+                                    @await Html.PartialAsync("LayoutPartials/_RequisitionUpdatePartial",item)
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+        </div>
+
+    </div>
+</div>
