@@ -42,6 +42,7 @@ namespace ProjectTracking.Presentation.Controllers
             if (!ModelState.IsValid)
                 return View(model);
             var result = await _requisitionService.Add(model);
+            //UserId boş geliyor kontrol edilecek
             return Ok(result);
         }
         public async Task<IActionResult> Update(int id)

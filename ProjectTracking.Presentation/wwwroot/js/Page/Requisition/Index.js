@@ -6,6 +6,7 @@ $("#btnAddRequisition").on('click',
     function () {
         $("#requisitionAddModal").modal('toggle');
     });
+
 $("#btnReqSave").on('click',
     function () {
         var model = {};
@@ -30,8 +31,8 @@ $("#btnReqSave").on('click',
 
                     },
                     success: function (data) {
-                        $("#empoloyees-tblwrapper").html('');
-                        $("#empoloyees-tblwrapper").html(data);
+                        $("#tblwrapper").html('');
+                        $("#tblwrapper").html(data);
 
                     },
                     complete: function () {

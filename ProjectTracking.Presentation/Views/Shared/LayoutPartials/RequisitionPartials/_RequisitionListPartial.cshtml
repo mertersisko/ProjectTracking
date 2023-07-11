@@ -9,7 +9,6 @@
             <th>@Html.DisplayNameFor(t => t.StartDate)</th>
             <th>@Html.DisplayNameFor(t => t.EndDate)</th>
             <th>@Html.DisplayNameFor(t => t.RequisitionDescription)</th>
-            <th>@Html.DisplayNameFor(t => t.User)</th>
             <th>@Html.DisplayNameFor(t => t.Status)</th>
             <th>Görev Oluştur</th>
         </tr>
@@ -29,7 +28,6 @@
                 <td>@item.StartDate.ToShortDateString()</td>
                 <td>@item.EndDate.ToShortDateString()</td>
                 <td>@item.RequisitionDescription</td>
-                <td>@item.User.Fullname</td>
                 <td>
                     @switch (item.Status)
                     {

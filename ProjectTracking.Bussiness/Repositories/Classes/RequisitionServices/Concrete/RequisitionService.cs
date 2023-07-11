@@ -16,19 +16,19 @@ public class RequisitionService : IRequisitionService
 
     public RequisitionService(ProjectTrackingDataContext dataContext)
     {
-        _dataContext = dataContext;       
+        _dataContext = dataContext;
     }
     public async Task<BaseResponse<Requisition>> Add(Requisition model)
     {
         try
         {
 
-  			model.EndDate = model.StartDate.AddDays(7);
-			model.Status = DataAccess.Entites.Enums.RequisitionStatus.Pending;
-			await _dataContext.Requisitions.AddAsync(model);
+            model.EndDate = model.StartDate.AddDays(7);
+            model.Status = RequisitionStatus.Pending;
+            await _dataContext.Requisitions.AddAsync(model);
             var result = await _dataContext.SaveChangesAsync();
 
-            if(result > 0)
+            if (result > 0)
             {
                 return new BaseResponse<Requisition>()
                 {
@@ -86,7 +86,7 @@ public class RequisitionService : IRequisitionService
     public async Task<BaseResponse<Requisition>> Update(Requisition model)
     {
         var currentRequisition = _dataContext.Requisitions.Find(model.Id);
-        
+
         try
         {
             currentRequisition.UserId = model.UserId;
@@ -132,11 +132,11 @@ public class RequisitionService : IRequisitionService
 
     public async Task<BaseResponse<Requisition>> GetActiveRequisition()
     {
-        var requisition =  await _dataContext.Requisitions.Where(t => t.Active && !t.Deleted).ToListAsync();
+        var requisition = await _dataContext.Requisitions.Where(t => t.Active && !t.Deleted).ToListAsync();
 
         return new BaseResponse<Requisition>()
         {
-            DataList = requisition 
+            DataList = requisition
         };
     }
 }
