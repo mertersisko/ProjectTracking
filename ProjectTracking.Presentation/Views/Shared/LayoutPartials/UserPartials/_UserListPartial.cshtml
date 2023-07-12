@@ -20,6 +20,7 @@
                     <a class="mb-2" style="font-size: 20px; cursor: pointer;" data-bs-toggle="modal" data-bs-target="@("#userUpdateModal-" + item.Id)" data-bs-url="@Url.Action($"Update/{item.Id}")"><i class="fa-solid fa-user-pen mx-4"></i></a>
                     @await Html.PartialAsync("LayoutPartials/UserPartials/_UserUpdatePartial",item)
                     <a onclick="Delete(@item.Id)"><i class="fa-solid fa-user-xmark mx-4" style="font-size: 20px; cursor: pointer;"></i></a>
+                    <a onclick="Update(@item.Id)"><i class="fa-solid fa-pencil" style="font-size: 20px; cursor: pointer;"></i></a>
 
                 </td>
                 <td>@item.Name</td>
