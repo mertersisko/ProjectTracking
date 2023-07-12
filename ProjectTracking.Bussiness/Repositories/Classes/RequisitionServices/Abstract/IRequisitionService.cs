@@ -5,8 +5,10 @@ using ProjectTracking.DataAccess.Entites.ResponseEntites;
 
 namespace ProjectTracking.Bussiness.Repositories.Classes.RequisitionServices.Abstract;
 
-public interface IRequisitionService: IBaseService<Requisition>
+public interface IRequisitionService : IBaseService<Requisition>
 {
     public Task<BaseResponse<Requisition>> GetActiveRequisition();
+
+    public Task<BaseResponse<Requisition>> DeleteById(int id);
 
 }

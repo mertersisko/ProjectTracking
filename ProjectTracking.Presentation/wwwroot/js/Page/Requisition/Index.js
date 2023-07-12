@@ -44,20 +44,20 @@ $("#btnReqSave").on('click',
         });
 
     });
-function AjaxPostJsonModel(url, data) {
-    return $.ajax({
-        url: url,
-        data: JSON.stringify(data),
-        type: "POST",
-        dataType: "json",
-        contentType: "application/json; charset=utf-8",
-        processData: false,
-        cache: false,
-        beforeSend: function () {
+//function AjaxPostJsonModel(url, data) {
+//    return $.ajax({
+//        url: url,
+//        data: JSON.stringify(data),
+//        type: "POST",
+//        dataType: "json",
+//        contentType: "application/json; charset=utf-8",
+//        processData: false,
+//        cache: false,
+//        beforeSend: function () {
 
-        },
-        complete: function () {
+//        },
+//        complete: function () {
 
-        }
-    });
-}
+//        }
+//    });
+//}

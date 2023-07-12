@@ -7,6 +7,8 @@ $("#btnAddUser").on('click',
     function () {
         $("#userAddModal").modal('toggle');
     });
+
+
 $("#btnSave").on('click',
     function () {
         var model = {};
@@ -32,18 +34,24 @@ $("#btnSave").on('click',
                     processData: false,
                     cache: false,
                     beforeSend: function () {
+
                     },
                     success: function (data) {
-                        $("#empoloyees-tblwrapper").html('');
-                        $("#empoloyees-tblwrapper").html(data);
+                        $("#userDataTable").html('');
+                        $("#userDataTable").html(data);
+
                     },
                     complete: function () {
+
                     }
                 });
+
             }
         });
 
     });
+
+
 $("btnUpdate").on('click',
     function () {
         $("#userUpdateModal").modal('toggle');
@@ -64,6 +72,8 @@ $("btnUpdate").on('click',
         });
     }
 )
+
+
 function AjaxPostJsonModel(url, data) {
     return $.ajax({
         url: url,

@@ -9,7 +9,7 @@ using ProjectTracking.DataAccess.Entites.Classes.DbClasses.UserClasses;
 
 namespace ProjectTracking.DataAccess.Context;
 
-public class ProjectTrackingDataContext :DbContext
+public class ProjectTrackingDataContext : DbContext
 {
     public ProjectTrackingDataContext(DbContextOptions<ProjectTrackingDataContext> options) : base(options)
     {
@@ -21,7 +21,7 @@ public class ProjectTrackingDataContext :DbContext
     {
         ////Proje tablosunda, Proje notları ile ilişkili bir veri silinirse. Projenin notları setnull olarak kalsın
         //modelBuilder.Entity<ProjectNote>().HasOne(o => o.Project).WithMany(w => w.ProjectNotes).OnDelete(DeleteBehavior.SetNull);
-        
+
 
         //Seed Data 
         modelBuilder.Entity<User>().HasData(new User
@@ -45,13 +45,11 @@ public class ProjectTrackingDataContext :DbContext
 
         var entires = ChangeTracker.Entries();
 
-     
-
         foreach (var item in entires)
         {
             if (item.Entity is BaseEntity entry)
             {
-               
+
                 switch (item.State)
                 {
                     case EntityState.Added:

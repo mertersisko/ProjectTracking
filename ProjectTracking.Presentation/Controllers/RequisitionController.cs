@@ -32,17 +32,12 @@ namespace ProjectTracking.Presentation.Controllers
             ViewBag.Users = new SelectList(_dataContext.Users.Where(t => t.Active & !t.Deleted).ToList(), "Id", "Name");
             return View(requisitionList.DataList);
         }
-        public IActionResult Add()
-        {
-            return View();
-        }
         [HttpPost]
         public async Task<IActionResult> Add([FromBody] Requisition model)
         {
             if (!ModelState.IsValid)
                 return View(model);
             var result = await _requisitionService.Add(model);
-            //UserId boş geliyor kontrol edilecek
             return Ok(result);
         }
         public async Task<IActionResult> Update(int id)
@@ -50,7 +45,7 @@ namespace ProjectTracking.Presentation.Controllers
             var result = await _requisitionService.GetById(id);
             if (result.Data == null)
                 return RedirectToAction(nameof(Index));
-            return PartialView("LayoutPartials/_RequisitionUpdatePartial", result.Data);
+            return PartialView("LayoutPartials/RequisitionPartials/_RequisitionUpdatePartial", result.Data);
         }
         [HttpPost]
         public async Task<IActionResult> Update(Requisition model)
@@ -83,6 +78,12 @@ namespace ProjectTracking.Presentation.Controllers
             var currentRequest = await _requisitionService.GetActiveRequisition();
 
             return PartialView("LayoutPartials/RequisitionPartials/_RequisitionListPartial", currentRequest.DataList);
+        }
+        public async Task<IActionResult> Delete(int id)
+        {
+            await _requisitionService.DeleteById(id);
+
+            return RedirectToAction(nameof(Index));
         }
     }
 }

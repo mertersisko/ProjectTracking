@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ProjectTracking.Bussiness.Repositories.Classes.RequisitionServices.Abstract;
+using ProjectTracking.Bussiness.Session;
 using ProjectTracking.DataAccess.Context;
 using ProjectTracking.DataAccess.Entites.Classes.DbClasses.RequestClasses;
 using ProjectTracking.DataAccess.Entites.Classes.DbClasses.UserClasses;
@@ -20,11 +21,14 @@ public class RequisitionService : IRequisitionService
     }
     public async Task<BaseResponse<Requisition>> Add(Requisition model)
     {
+
         try
         {
-
             model.EndDate = model.StartDate.AddDays(7);
             model.Status = RequisitionStatus.Pending;
+            model.ProjectId = 2;
+            model.UserId = 2;
+
             await _dataContext.Requisitions.AddAsync(model);
             var result = await _dataContext.SaveChangesAsync();
 
@@ -63,14 +67,59 @@ public class RequisitionService : IRequisitionService
         }
     }
 
-    public Task<BaseResponse<Requisition>> Delete(Requisition model)
+    public async Task<BaseResponse<Requisition>> Delete(Requisition model)
     {
-        throw new NotImplementedException();
+        var currentRequisition = await _dataContext.Requisitions.FindAsync(model.Id);
+
+        try
+        {
+            currentRequisition.Active = false;
+            currentRequisition.Deleted = true;
+            _dataContext.Requisitions.Update(currentRequisition);
+
+            var result = await _dataContext.SaveChangesAsync();
+
+            if (result > 0)
+            {
+                return new BaseResponse<Requisition>()
+                {
+                    Message = "Silme işlemi başarılı",
+                    Title = "Başarı",
+                    Status = ResultStatus.Success,
+                    Data = currentRequisition,
+                    Url = "/Requisition/Index"
+                };
+            }
+            return new BaseResponse<Requisition>()
+            {
+                Message = "Silme işlemi sırasında hata oluştu",
+                Title = "Hata",
+                Status = ResultStatus.Error,
+                Data = null,
+                Url = string.Empty
+            };
+        }
+        catch (Exception e)
+        {
+            return new BaseResponse<Requisition>()
+            {
+                Message = $"Silme işlemi sırasında {e} hatası oluştu",
+                Title = "Hata",
+                Status = ResultStatus.Error,
+                Data = null,
+                Url = string.Empty
+            };
+        }
     }
 
-    public Task<BaseResponse<Requisition>> GetById(int id)
+    public async Task<BaseResponse<Requisition>> GetById(int id)
     {
-        throw new NotImplementedException();
+        var currentRequisition = await _dataContext.Requisitions.FindAsync(id);
+
+        return new BaseResponse<Requisition>()
+        {
+            Data = currentRequisition,
+        };
     }
 
     public async Task<BaseResponse<Requisition>> GetList(Requisition model)
@@ -138,5 +187,46 @@ public class RequisitionService : IRequisitionService
         {
             DataList = requisition
         };
+    }
+
+    public async Task<BaseResponse<Requisition>> DeleteById(int id)
+    {
+        var currentRequisition = await GetById(id);
+
+        if (currentRequisition.Data != null)
+        {
+            _dataContext.Requisitions.Remove(currentRequisition.Data);
+
+            var result = await _dataContext.SaveChangesAsync();
+
+            if (result > 0)
+            {
+                return new BaseResponse<Requisition>()
+                {
+                    Message = "Silme işlemi başarılı",
+                    Title = "Başarı",
+                    Status = ResultStatus.Success,
+                    Data = null,
+                    Url = "Requisition/Index"
+                };
+            }
+            return new BaseResponse<Requisition>()
+            {
+                Message = "Silme işlemi sırasında hata oluştu",
+                Title = "Hata",
+                Status = ResultStatus.Error,
+                Data = null,
+                Url = string.Empty
+            };
+        }
+        return new BaseResponse<Requisition>()
+        {
+            Message = "Silme işlemi sırasında hata oluştu",
+            Title = "Hata",
+            Status = ResultStatus.Error,
+            Data = null,
+            Url = string.Empty
+        };
+
     }
 }

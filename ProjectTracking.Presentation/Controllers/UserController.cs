@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using ProjectTracking.Bussiness.Repositories.Classes.UserServices.Abstract;
 using ProjectTracking.Bussiness.Session;
 using ProjectTracking.DataAccess.Context;
@@ -51,7 +52,7 @@ public class UserController : Controller
         return PartialView("LayoutPartials/UserPartials/_UserUpdatePartial", queryResult.Data);
     }
     [HttpPost]
-    public async Task<IActionResult> Update(User model)
+    public async Task<IActionResult> Update([FromBody] User model)
     {
         if (_userService.IsTheUserPresent(model.Email, model.Id))
             ModelState.AddModelError("Kullanıcı Email", $"{model.Email} daha önce eklenmiş");
@@ -59,14 +60,15 @@ public class UserController : Controller
         if (!ModelState.IsValid)
             return View(model);
 
-        ViewBag.Result = await _userService.Update(model);
+        var result = await _userService.Update(model);
 
-        return RedirectToAction(nameof(Index));
+        return Ok(result);
     }
     [Auth]
 
     public async Task<IActionResult> Delete(int id)
     {
+
         await _userService.DeleteById(id);
 
         return RedirectToAction(nameof(Index));
