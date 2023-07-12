@@ -32,18 +32,14 @@ $("#btnSave").on('click',
                     processData: false,
                     cache: false,
                     beforeSend: function () {
-
                     },
                     success: function (data) {
                         $("#empoloyees-tblwrapper").html('');
                         $("#empoloyees-tblwrapper").html(data);
-
                     },
                     complete: function () {
-
                     }
                 });
-
             }
         });
 
