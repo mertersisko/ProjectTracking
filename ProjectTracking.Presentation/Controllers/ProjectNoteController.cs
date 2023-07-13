@@ -1,7 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ProjectTracking.Bussiness.Repositories.Classes.ProjectNoteService.Abstract;
-using ProjectTracking.Bussiness.Repositories.Classes.ProjectServices.Abstract;
-using ProjectTracking.DataAccess.Context;
 using ProjectTracking.DataAccess.Entites.Classes.DbClasses.ProjectNoteClasses;
 
 namespace ProjectTracking.Presentation.Controllers;
@@ -14,9 +12,9 @@ public class ProjectNoteController : Controller
     {
         _projectNoteService = projectNoteService;
     }
-    public  IActionResult Index()
+    public IActionResult Index()
     {
-        var noteList =  _projectNoteService.NonDeleted();
+        var noteList = _projectNoteService.NonDeleted();
 
         return View(noteList.DataList);
     }

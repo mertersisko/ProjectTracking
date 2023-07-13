@@ -19,7 +19,7 @@ public class Mission : BaseEntity
     [DisplayName("Atanan")]
     public int UserId { get; set; }
 	public User User { get; set; }
-    [DisplayName("Talebi")]
+    [DisplayName("Talep Numarası")]
     public int RequisitionId { get; set; }
 	public Requisition Requisition { get; set; }
     [DisplayName("Durum")]
