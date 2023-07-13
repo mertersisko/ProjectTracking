@@ -4,7 +4,6 @@ using Microsoft.EntityFrameworkCore;
 using ProjectTracking.Bussiness.Repositories.Classes.MissionServices.Abstract;
 using ProjectTracking.Bussiness.Repositories.Classes.RequisitionServices.Abstract;
 using ProjectTracking.Bussiness.Repositories.Classes.UserServices.Abstract;
-using ProjectTracking.Bussiness.Session;
 using ProjectTracking.DataAccess.Context;
 using ProjectTracking.DataAccess.Entites.Classes.DbClasses.MissionClasses;
 using ProjectTracking.DataAccess.Entites.Classes.DbClasses.RequestClasses;
@@ -76,14 +75,15 @@ namespace ProjectTracking.Presentation.Controllers
         public async Task<IActionResult> RequisitionGet()
         {
             var currentRequest = await _requisitionService.GetActiveRequisition();
+            ViewBag.Users = new SelectList(_dataContext.Users.Where(t => t.Active & !t.Deleted).ToList(), "Id", "Name");
 
             return PartialView("LayoutPartials/RequisitionPartials/_RequisitionListPartial", currentRequest.DataList);
         }
         public async Task<IActionResult> Delete(int id)
         {
-            await _requisitionService.DeleteById(id);
+            var result = await _requisitionService.DeleteById(id);
 
-            return RedirectToAction(nameof(Index));
+            return Ok(result);
         }
     }
 }

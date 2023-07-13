@@ -1,134 +1,31 @@
-﻿@using ProjectTracking.DataAccess.Entites.Classes.DbClasses.ProjectClasses;
-@model IEnumerable<Project>
-@{
+﻿@{
     ViewData["Title"] = "Index";
 }
-
 <div class="page-titles">
     <ol class="breadcrumb">
+        <li><h5 class="bc-title">Proje</h5></li>
         <li class="breadcrumb-item">
             <a asp-controller="Home" asp-action="Index">
                 <svg width="17" height="17" viewbox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M2.125 6.375L8.5 1.41667L14.875 6.375V14.1667C14.875 14.5424 14.7257 14.9027 14.4601 15.1684C14.1944 15.4341 13.8341 15.5833 13.4583 15.5833H3.54167C3.16594 15.5833 2.80561 15.4341 2.53993 15.1684C2.27426 14.9027 2.125 14.5424 2.125 14.1667V6.375Z" stroke="#2C2C2C" stroke-linecap="round" stroke-linejoin="round"></path>
                     <path d="M6.375 15.5833V8.5H10.625V15.5833" stroke="#2C2C2C" stroke-linecap="round" stroke-linejoin="round"></path>
                 </svg>
-                Anasayfa
+                Proje İşlemleri
             </a>
         </li>
-        <li class="breadcrumb-item active"><a asp-controller="Mission" asp-action="Index">Görev</a></li>
+        <li class="breadcrumb-item active"><a asp-controller="Project" asp-action="Index">Projeler</a></li>
     </ol>
-    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">+ Proje Oluştur</button>
-
+    <a class="text-primary fs-13" id="btnProjectAdd" role="button">+ Yeni Proje Kaydet</a>
 </div>
-<div class="container-fluid">
-    <div class="d-flex justify-content-between align-items-center mb-3">
-        <h5 class="mb-0">Görev Özeti</h5>
-    </div>
-    <div class="row">
-        <div class="col">
-            <table id="myTable" class="display" style="min-width: 845px">
-                <thead>
-                    <tr>
-                        <th>
-                            <div class="form-check custom-checkbox">
-                                <input type="checkbox" class="form-check-input" id="checkAll" required="">
-                                <label class="form-check-label" for="checkAll"></label>
-                            </div>
-                        </th>
-                        <th>@Html.DisplayNameFor(t => t.Id)</th>
-                        <th>@Html.DisplayNameFor(t => t.ProjectName)</th>
-                        <th>@Html.DisplayNameFor(t => t.ProjectDescription)</th>
-                        <th>@Html.DisplayNameFor(t => t.Requisitions)</th>
-                        <th>@Html.DisplayNameFor(t => t.ProjectNotes)</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var item in Model)
-                    {
-                        <tr>
-                            <td>
-                                <div class="form-check custom-checkbox">
-                                    <input type="checkbox" class="form-check-input" id="customCheckBox3" required="">
-                                    <label class="form-check-label" for="customCheckBox3"></label>
-                                </div>
-                            </td>
-                            <td>@item.Id</td>
-                            <td>@item.ProjectName</td>
-                            <td>@item.ProjectDescription</td>
-                            <td>@item.Requisitions</td>
-                            <td>
-                                <button type="button" class="btn" data-bs-toggle="modal" data-bs-target=@("#add-project-note-" + item.Id)><i class="fa-solid fa-pencil"></i></button>
-
-                                <button type="button" class="btn" data-bs-toggle="modal" data-bs-target=@("#view-project-note-" + item.Id)><i class="fa-solid fa-message"></i></button>
-
-                                @*Note ekleme modal*@
-                                <div class="modal fade" id="add-project-note-@item.Id" tabindex="-1" aria-labelledby="exampleModalLabel1" aria-hidden="true">
-                                    <div class="modal-dialog">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h1 class="modal-title fs-5" id="exampleModalLabel">@item.ProjectName için Not Ekle</h1>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                            </div>
-                                            <div class="modal-body">
-                                                <form>
-                                                    <input type="hidden" id="ProjectId" value="@item.Id" />
-                                                    <div class="mb-3">
-                                                        <label class="col-form-label">Not Başlığı</label>
-                                                        <input type="text" class="form-control" id="noteTitle">
-                                                    </div>
-                                                    <div class="mb-3">
-                                                        <label class="col-form-label">Not Açıklaması</label>
-                                                        <textarea class="form-control" id="noteDesc"></textarea>
-                                                    </div>
-                                                </form>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                                <button type="button" class="btn btn-primary" id="noteAddBtn">Kaydet</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                @*Not Görüntüleme*@
-                                <div class="modal fade" id="view-project-note-@item.ProjectNotes" tabindex="-1" aria-labelledby="exampleModalLabel2" aria-hidden="true">
-                                    <div class="modal-dialog modal-xl">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h1 class="modal-title fs-5" id="exampleModalLabel">@item.ProjectName Not Listesi</h1>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                            </div>
-                                            <div class="modal-body">
-                                                <div class="row">
-                                                    <div class="col">
-                                                        <input type="hidden" id="@item.Id"/>
-                                                            <table class="table table-hover" id="projectNotes">
-                                                                <thead>
-                                                                    <tr>
-                                                                        <th>Başlık</th>
-                                                                        <th>Açıklama</th>
-                                                                    </tr>
-                                                                </thead>
-                                                            </table>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                                <button type="button" class="btn btn-primary" id="noteAddBtn">Kaydet</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
-        </div>
+<div class="row">
+    <div class="col mt-5 p-3" id="tblwrapper">
+        <partial name="LayoutPartials/ProjectPartials/_ProjectListPartial" />
     </div>
 </div>
+<partial name="LayoutPartials/ProjectPartials/_ProjectAddPartial" />
+
 @*Proje Kaydet Modal*@
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+@*<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -154,15 +51,7 @@
         </div>
     </div>
 </div>
-
+*@
 @section Scripts{
     <script src="~/js/Page/Project/Index.js"></script>
-    <script>
-        $(document).ready(function () {
-            console.log("ready!");
-            drawDataTable();
-        });
-    </script>
-        
-
-	}
+    }

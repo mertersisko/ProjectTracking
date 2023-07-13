@@ -13,15 +13,10 @@ namespace ProjectTracking.Presentation.Controllers
 {
     public class MissionController : Controller
     {
-        private readonly ProjectTrackingDataContext _dataContext;
         private readonly IMissionService _missionService;
-        private readonly IUserService _userService;
-
-        public MissionController(ProjectTrackingDataContext dataContext, IMissionService missionService, IUserService userService)
+        public MissionController(IMissionService missionService)
         {
-            _dataContext = dataContext;
             _missionService = missionService;
-            _userService = userService;
         }
         public async Task<IActionResult> Index()
         {
@@ -29,21 +24,18 @@ namespace ProjectTracking.Presentation.Controllers
             var missionList = await _missionService.GetMissionAsync();
             return View(missionList.DataList);
         }
-        public IActionResult Add()
+        public async Task<IActionResult> Delete(int id)
         {
-            ViewBag.Users = new SelectList(_dataContext.Users.ToList(), "Id", "Name");
-            ViewBag.Project = new SelectList(_dataContext.Projects.ToList(), "Id", "Name");
-            ViewBag.Status = new SelectList(Enum.GetValues(typeof(RequisitionStatus)));
-            return View();
+            var result = await _missionService.DeleteById(id);
+            return Ok(result);
         }
-        [HttpPost]
-        public async Task<IActionResult> Add(Mission model)
+        [HttpGet]
+        public async Task<IActionResult> MissionGet()
         {
-            if (!ModelState.IsValid)
-                return View(model);
+            var mission = await _missionService.GetMissionAsync();
 
-             await _missionService.Add(model);
-            return View(model);
+            return PartialView("LayoutPartials/MissionPartials/_MissionListPartial", mission.DataList);
         }
+
     }
 }

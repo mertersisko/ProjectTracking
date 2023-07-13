@@ -6,5 +6,7 @@ namespace ProjectTracking.Bussiness.Repositories.Classes.MissionServices.Abstrac
 
 public interface IMissionService : IBaseService<Mission>
 {
-    public Task<BaseResponse<Mission>>GetMissionAsync();
+    public Task<BaseResponse<Mission>> GetMissionAsync();
+
+    public Task<BaseResponse<Mission>> DeleteById(int id);
 }

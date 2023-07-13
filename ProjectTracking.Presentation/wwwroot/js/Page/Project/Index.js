@@ -1,5 +1,12 @@
-﻿ //Proje ekleme Js
+﻿$(document).ready(function () {
+    $('#projectDataTable').DataTable();
+});
 
+
+$("#btnProjectAdd").on('click',
+    function () {
+        $("#projectAddModal").modal('toggle');
+    });
 $("#btnKaydet").click(function () {
     if ($('#ProjectName').val() == "" || $('#ProjectDesc').val() == "") {
         alert("Proje adı ve açıklaması boş bırakılamaz!")
@@ -40,12 +47,12 @@ $("#noteAddBtn").click(function () {
         });
     }
 });
-function drawDataTable() {
-    $('#projectNotes').DataTable({
-        ajax: '/ProjectNote/GetProjectNote/2',
-        columns: [
-            { data: 'name' },
-            { data: 'desc' },
-        ]
-    });
-}
+//function drawDataTable() {
+//    $('#projectNotes').DataTable({
+//        ajax: '/ProjectNote/GetProjectNote/2',
+//        columns: [
+//            { data: 'name' },
+//            { data: 'desc' },
+//        ]
+//    });
+//}

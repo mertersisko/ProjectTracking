@@ -26,7 +26,7 @@ public class ProjectController : Controller
     [HttpPost]
     public async Task<IActionResult> Add(Project model)
     {
-        if(!ModelState.IsValid)
+        if (!ModelState.IsValid)
             return View(model);
 
         await _projectService.Add(model);

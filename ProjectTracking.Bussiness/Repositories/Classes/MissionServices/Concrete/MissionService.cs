@@ -6,6 +6,7 @@ using ProjectTracking.DataAccess.Context;
 using ProjectTracking.DataAccess.Entites.Classes.DbClasses.MissionClasses;
 using ProjectTracking.DataAccess.Entites.Classes.DbClasses.RequestClasses;
 using ProjectTracking.DataAccess.Entites.Classes.DbClasses.UserClasses;
+using ProjectTracking.DataAccess.Entites.Enums;
 using ProjectTracking.DataAccess.Entites.ResponseEntites;
 
 namespace ProjectTracking.Bussiness.Repositories.Classes.MissionServices.Concrete;
@@ -59,18 +60,66 @@ public class MissionService : IMissionService
         }
     }
 
-
-
-
-
     public Task<BaseResponse<Mission>> Delete(Mission model)
     {
         throw new NotImplementedException();
     }
 
-    public Task<BaseResponse<Mission>> GetById(int id)
+    public async Task<BaseResponse<Mission>> DeleteById(int id)
     {
-        throw new NotImplementedException();
+        var mission = await GetById(id);
+
+        try
+        {
+            if (mission.Data != null)
+            {
+                _dataContext.Missions.Remove(mission.Data);
+
+                var result = await _dataContext.SaveChangesAsync();
+
+                if (result > 0)
+                {
+                    return new BaseResponse<Mission>()
+                    {
+                        Message = "Silme başarılı",
+                        Title = "Başarı",
+                        Status = ResultStatus.Success,
+                        Data = null,
+                        Url = string.Empty
+                    };
+                }
+
+            }
+            return new BaseResponse<Mission>()
+            {
+                Message = "Silme ilemi sırasında hata oluştu",
+                Title = "Hata",
+                Status = ResultStatus.Error,
+                Data = null,
+                Url = string.Empty
+            };
+        }
+        catch (Exception ex)
+        {
+
+            return new BaseResponse<Mission>()
+            {
+                Message = $"Silme ilemi sırasında {ex} hatası oluştu",
+                Title = "Hata",
+                Status = ResultStatus.Error,
+                Data = null,
+                Url = string.Empty
+            };
+        }
+    }
+
+    public async Task<BaseResponse<Mission>> GetById(int id)
+    {
+        var currentMission = await _dataContext.Missions.FindAsync(id);
+        return new BaseResponse<Mission>()
+        {
+            Data = currentMission,
+        };
     }
 
     public async Task<BaseResponse<Mission>> GetList(Mission model)

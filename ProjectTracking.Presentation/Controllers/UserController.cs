@@ -11,10 +11,9 @@ namespace ProjectTracking.Presentation.Controllers;
 public class UserController : Controller
 {
 
-    private readonly ProjectTrackingDataContext _dataContext;
     private readonly IUserService _userService;
 
-    public UserController(ProjectTrackingDataContext dataContext, IUserService userService)
+    public UserController(IUserService userService)
     {
 
         _userService = userService;
@@ -39,7 +38,6 @@ public class UserController : Controller
         return Ok(result);
     }
     [Auth]
-
     public async Task<IActionResult> Update(int id)
     {
         var queryResult = await _userService.GetById(id);
@@ -49,7 +47,7 @@ public class UserController : Controller
             return RedirectToAction(nameof(Index));
         }
 
-        return PartialView("LayoutPartials/UserPartials/_UserUpdatePartial", queryResult.Data);
+        return PartialView("LayoutPartials/UserPartials/_UserAddPartial", queryResult.Data);
     }
     [HttpPost]
     public async Task<IActionResult> Update(User model)
@@ -109,5 +107,7 @@ public class UserController : Controller
 
         return PartialView("LayoutPartials/UserPartials/_UserListPartial", currentUser.DataList);
     }
+
 }
+
 

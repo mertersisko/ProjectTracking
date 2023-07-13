@@ -1,76 +1,9 @@
 ﻿
 $(document).ready(function () {
-    $('#userDataTable').DataTable();
+    $('#missionDataTable').DataTable();
 });
 
-$("#btnAddUser").on('click',
-    function () {
-        $("#userAddModal").modal('toggle');
-    });
 
-
-$("#btnSave").on('click',
-    function () {
-        var model = {};
-        model.Name = $('#txtName').val();
-        model.Surname = $('#txtSurname').val();
-        model.Email = $('#txtMail').val();
-        model.Password = $('#txtPassword').val();
-        model.PasswordAgain = $('#txtPasswordAgain').val();
-
-        AjaxPostJsonModel("/User/Add", model).then((response) => {
-
-            if (response.status == 1) {
-                $("#userAddModal").modal('toggle');
-                $('#txtName').val('');
-                $('#txtSurname').val('');
-                $('#txtMail').val('');
-                $('#txtPassword').val('');
-                $('#txtPasswordAgain').val('');
-
-                $.ajax({
-                    url: '/User/UserGet',
-                    type: "GET",
-                    processData: false,
-                    cache: false,
-                    beforeSend: function () {
-
-                    },
-                    success: function (data) {
-                        $("#userDataTable").html('');
-                        $("#userDataTable").html(data);
-
-                    },
-                    complete: function () {
-
-                    }
-                });
-
-            }
-        });
-
-    });
-
-$("btnUpdate").on('click',
-    function () {
-        $("#userUpdateModal").modal('toggle');
-        $.ajax({
-            url: '/User/UserGet',
-            type: "GET",
-            processData: false,
-            cache: false,
-            beforeSend: function () {
-
-            },
-            success: function (data) {
-                $("#userDataTable").html('');
-                $("#userDataTable").html(data);
-
-            },
-            complete: function () { }
-        });
-    }
-)
 
 function Delete(id) {
     Swal.fire({
@@ -85,10 +18,10 @@ function Delete(id) {
     }).then((result) => {
         if (result.isConfirmed) {
 
-            AjaxPostJsonModel("/User/Delete/" + id).then((response) => {
+            AjaxPostJsonModel("/Mission/Delete/" + id).then((response) => {
 
                 $.ajax({
-                    url: '/User/UserGet',
+                    url: '/Mission/MissionGet',
                     type: "GET",
                     processData: false,
                     cache: false,
@@ -96,8 +29,8 @@ function Delete(id) {
 
                     },
                     success: function (data) {
-                        $("#userDataTable").html('');
-                        $("#userDataTable").html(data);
+                        $("#missionDataTable").html('');
+                        $("#missionDataTable").html(data);
 
                     },
                     complete: function () {

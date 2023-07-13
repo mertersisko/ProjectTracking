@@ -1,0 +1,40 @@
+﻿@using ProjectTracking.DataAccess.Entites.Classes.DbClasses.MissionClasses;
+@using ProjectTracking.DataAccess.Entites.Enums;
+@model IEnumerable<Mission>
+<table id="missionDataTable" class="display" style="min-width: 845px">
+    <thead>
+        <tr>
+            <th>İşlem</th>
+            <th>@Html.DisplayNameFor(t => t.Id)</th>
+            <th>@Html.DisplayNameFor(t => t.Title)</th>
+            <th>@Html.DisplayNameFor(t => t.Status)</th>
+            <th>@Html.DisplayNameFor(t => t.StartDate)</th>
+            <th>@Html.DisplayNameFor(t => t.EndDate)</th>
+            <th>@Html.DisplayNameFor(t => t.RequisitionId)</th>
+            <th>@Html.DisplayNameFor(t => t.UserId)</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    <a onclick="Delete(@item.Id)"><i class="fa-solid fa-trash mx-4" style="font-size: 20px; cursor: pointer;"></i></a>
+                </td>
+                <td>@item.Id</td>
+                <td>
+                    <div class="products">
+                        <div>
+                            <h6>@item.Title</h6>
+                        </div>
+                    </div>
+                </td>
+                <td>@item.Status</td>
+                <td><span>@item.StartDate.ToShortDateString()</span></td>
+                <td><span>@item.EndDate.ToShortDateString()</span></td>
+                <td><span>@item.RequisitionId</span></td>
+                <td><span>@item.User</span></td>
+            </tr>
+        }
+    </tbody>
+</table>
