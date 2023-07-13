@@ -9,9 +9,17 @@
                 <div class="row">
                     <div class="col">
                         <div class="mb-3 row">
+                            <label class="col-lg-4 col-form-label">Projenin bağlı olduğu talebi seçin.</label>
+                            <div class="col-lg-6">
+                                <select class="form-control">
+                                    <option value="0" disable selected>Lütfen Seçim Yapınız</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
                             <label class="col-lg-4 col-form-label">Proje Adı</label>
                             <div class="col-lg-6">
-                                <input type="date" class="form-control" id="ProjectName">
+                                <input type="text" class="form-control" placeholder="Projeniz için açıklama giriniz" id="ProjectName">
                             </div>
                         </div>
                         <div class="mb-3 row">
@@ -21,7 +29,6 @@
                             </div>
                         </div>
                     </div>
-
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">İptal</button>
