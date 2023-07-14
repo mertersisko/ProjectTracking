@@ -12,6 +12,7 @@
             <th>@Html.DisplayNameFor(t => t.EndDate)</th>
             <th>@Html.DisplayNameFor(t => t.RequisitionId)</th>
             <th>@Html.DisplayNameFor(t => t.UserId)</th>
+            <th>Proje Oluştur</th>
         </tr>
     </thead>
     <tbody>
@@ -34,6 +35,12 @@
                 <td><span>@item.EndDate.ToShortDateString()</span></td>
                 <td><span>@item.RequisitionId</span></td>
                 <td><span>@item.User</span></td>
+                <td>
+                    <div class="d-flex">
+                        <button type="button" class="btn mb-2" data-bs-toggle="modal" data-bs-target="@("#UpdateMission-" + item.Id)" data-bs-url="@Url.Action($"Update/{item.Id}")"><i class="fa fa-solid fa-plus" style="font-size: 20px; cursor: pointer;"></i></button>
+                        @await Html.PartialAsync("LayoutPartials/MissionPartials/_MissionUpdatePartial",item)
+                    </div>
+                </td>
             </tr>
         }
     </tbody>

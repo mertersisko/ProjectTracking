@@ -1,0 +1,26 @@
+﻿@using ProjectTracking.DataAccess.Entites.Classes.DbClasses.MissionClasses;
+@model Mission
+
+<div class="modal fade bd-example-modal-lg" id="UpdateMission-@Model.Id" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Görevi oluşturmak için kullanıcıyı seçiniz</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal">
+                </button>
+            </div>
+            <form asp-controller="Mission" asp-action="Update" method="post">
+                <input type="hidden" asp-for="@Model.Id"/>
+                <div class="modal-body">
+                    <select class="form-control" asp-for="UserId" asp-items="@ViewBag.Users">
+                        <option value="0" disable selected>Lütfen Kullanıcı Seçiniz</option>
+                    </select>
+                </div>
+                <div class="modal-footer">
+                <button type="button" class="btn btn-danger light" data-bs-dismiss="modal">İptal</button>
+                <button type="submit" class="btn btn-primary">Kaydet</button>
+                </div>
+             </form>
+        </div>
+    </div>
+</div>

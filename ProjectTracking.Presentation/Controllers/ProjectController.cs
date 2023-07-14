@@ -14,29 +14,37 @@ public class ProjectController : Controller
     private readonly IProjectService _projectService;
     private readonly IRequisitionService _requisitionService;
 
-    public ProjectController(IProjectService projectService, ProjectTrackingDataContext dataContext)
+    public ProjectController(IProjectService projectService)
     {
-        _dataContext = dataContext;
         _projectService = projectService;
     }
     public async Task<IActionResult> Index()
     {
         var projectList = await _projectService.ActiveProject();
-        //ViewBag.RequisitionList = new SelectList(_dataContext.Requisitions.ToList(), "Id", "RequisitionsName");
         return View(projectList.DataList);
     }
-    public IActionResult Add()
-    {
-        return View();
-    }
     [HttpPost]
-    public async Task<IActionResult> Add(Project model)
+    public async Task<IActionResult> Add([FromBody] Project model)
     {
         if (!ModelState.IsValid)
             return View(model);
 
-        await _projectService.Add(model);
-        return View(model);
+        var result = await _projectService.Add(model);
+        return Ok(result);
+    }
+    [HttpGet]
+    public async Task<IActionResult> ProjectGet()
+    {
+        var project = await _projectService.ActiveProject();
+
+        return PartialView("LayoutPartials/ProjectPartials/_ProjectListPartial", project.DataList);
+    }
+
+    public async Task<IActionResult> Delete(int id)
+    {
+        var result = await _projectService.DeleteById(id);
+
+        return Ok(result);
     }
 
 }

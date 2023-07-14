@@ -4,10 +4,10 @@
 <table id="projectDataTable" class="display" style="min-width: 845px">
     <thead>
         <tr>
+            <th>İşlem</th>
             <th>@Html.DisplayNameFor(t => t.Id)</th>
             <th>@Html.DisplayNameFor(t => t.ProjectName)</th>
             <th>@Html.DisplayNameFor(t => t.ProjectDescription)</th>
-            <th>@Html.DisplayNameFor(t => t.Requisitions)</th>
             <th>@Html.DisplayNameFor(t => t.ProjectNotes)</th>
         </tr>
     </thead>
@@ -15,15 +15,16 @@
         @foreach (var item in Model)
         {
             <tr>
+                <td>
+                    <a onclick="Delete(@item.Id)"><i class="fa-solid fa-trash mx-4" style="font-size: 20px; cursor: pointer;"></i></a>
+                </td>
                 <td>@item.Id</td>
                 <td>@item.ProjectName</td>
                 <td>@item.ProjectDescription</td>
-                <td>@item.Requisitions</td>
                 <td>
                     <button type="button" class="btn" data-bs-toggle="modal" data-bs-target=@("#add-project-note-" + item.Id)><i class="fa-solid fa-pencil"></i></button>
 
                     <button type="button" class="btn" data-bs-toggle="modal" data-bs-target=@("#view-project-note-" + item.Id)><i class="fa-solid fa-message"></i></button>
-
                     @*Note ekleme modal*@
                     <div class="modal fade" id="add-project-note-@item.Id" tabindex="-1" aria-labelledby="exampleModalLabel1" aria-hidden="true">
                         <div class="modal-dialog">

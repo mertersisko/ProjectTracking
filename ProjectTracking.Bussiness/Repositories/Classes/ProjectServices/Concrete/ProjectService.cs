@@ -2,6 +2,8 @@
 using ProjectTracking.Bussiness.Repositories.Classes.ProjectServices.Abstract;
 using ProjectTracking.DataAccess.Context;
 using ProjectTracking.DataAccess.Entites.Classes.DbClasses.ProjectClasses;
+using ProjectTracking.DataAccess.Entites.Classes.DbClasses.RequestClasses;
+using ProjectTracking.DataAccess.Entites.Enums;
 using ProjectTracking.DataAccess.Entites.ResponseEntites;
 
 namespace ProjectTracking.Bussiness.Repositories.Classes.ProjectServices.Concrete;
@@ -33,7 +35,7 @@ public class ProjectService : IProjectService
 
             var result = await _dataContext.SaveChangesAsync();
 
-            if(result > 0)
+            if (result > 0)
             {
                 return new BaseResponse<Project>
                 {
@@ -72,9 +74,54 @@ public class ProjectService : IProjectService
         throw new NotImplementedException();
     }
 
-    public Task<BaseResponse<Project>> GetById(int id)
+    public async Task<BaseResponse<Project>> DeleteById(int id)
     {
-        throw new NotImplementedException();
+        var currentProject = await GetById(id);
+
+        if (currentProject.Data != null)
+        {
+            _dataContext.Projects.Remove(currentProject.Data);
+
+            var result = await _dataContext.SaveChangesAsync();
+
+            if (result > 0)
+            {
+                return new BaseResponse<Project>()
+                {
+                    Message = "Silme işlemi başarılı",
+                    Title = "Başarı",
+                    Status = ResultStatus.Success,
+                    Data = null,
+                    Url = "Project/Index"
+                };
+            }
+            return new BaseResponse<Project>()
+            {
+                Message = "Silme işlemi sırasında hata oluştu",
+                Title = "Hata",
+                Status = ResultStatus.Error,
+                Data = null,
+                Url = string.Empty
+            };
+        }
+        return new BaseResponse<Project>()
+        {
+            Message = "Silme işlemi sırasında hata oluştu",
+            Title = "Hata",
+            Status = ResultStatus.Error,
+            Data = null,
+            Url = string.Empty
+        };
+    }
+
+    public async Task<BaseResponse<Project>> GetById(int id)
+    {
+        var currentProject = await _dataContext.Projects.FindAsync(id);
+
+        return new BaseResponse<Project>()
+        {
+            Data = currentProject
+        };
     }
 
     public async Task<BaseResponse<Project>> GetList(Project model)
@@ -100,7 +147,7 @@ public class ProjectService : IProjectService
 
             var result = await _dataContext.SaveChangesAsync();
 
-            if(result > 0)
+            if (result > 0)
             {
                 return new BaseResponse<Project>
                 {
