@@ -1,6 +1,4 @@
-﻿@using ProjectTracking.DataAccess.Entites.Classes.DbClasses.ProjectClasses;
-@model Project
-<div class="modal fade" id="projectAddModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+﻿<div class="modal fade" id="projectAddModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -10,29 +8,27 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col">
-@*                        <form asp-controller="Project" asp-action="Add" method="post">
                         <div class="mb-3 row">
                             <label class="col-lg-4 col-form-label">Projenin bağlı olduğu talebi seçin.</label>
                             <div class="col-lg-6">
-                                <select class="form-control" asp-for="Requisitions" asp-items="@ViewBag.RequisitionList">
+                                <select class="form-control" id="requisitionList">
                                     <option value="0" disable selected>Lütfen Seçim Yapınız</option>
                                 </select>
                             </div>
                         </div>
                         <div class="mb-3 row">
-                            <label asp-for=ProjectName class="col-lg-4 col-form-label"></label>
+                            <label class="col-lg-4 col-form-label"></label>
                             <div class="col-lg-6">
-                                <input asp-for=ProjectName type="text" class="form-control" placeholder="Projeniz için açıklama giriniz" id="ProjectName">
+                                <input  type="text" class="form-control" placeholder="Projeniz için açıklama giriniz" id="ProjectName">
                             </div>
                         </div>
                         <div class="mb-3 row">
-                            <label asp-for="ProjectDescription" class="col-lg-4 col-form-label"></label>
+                            <label  class="col-lg-4 col-form-label"></label>
                             <div class="col-lg-6">
-                                <textarea asp-for="ProjectDescription" type="text" class="form-control" placeholder="Projeniz için açıklama giriniz" id="ProjectDesc"></textarea>
+                                <textarea  type="text" class="form-control" placeholder="Projeniz için açıklama giriniz" id="ProjectDesc"></textarea>
                             </div>
                         </div>
-                        </form>
-*@                    </div>
+                   </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">İptal</button>
