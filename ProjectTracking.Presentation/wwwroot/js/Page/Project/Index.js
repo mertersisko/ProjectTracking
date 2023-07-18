@@ -2,47 +2,91 @@
     $('#projectDataTable').DataTable();
 });
 
-$("#btnProjectAdd").on('click',
-    function () {
-        $("#projectAddModal").modal('toggle');
-    });
 
-$("#btnProjectSave").on('click',
-    function () {
-        var model = {};
-        model.ProjectName = $('#ProjectName').val();
-        model.ProjectDescription = $('#ProjectDesc').val();
+function ProjectAdd() {
+    $("#projectAddModal").modal('toggle');
 
-        AjaxPostJsonModel("/Project/Add", model).then((response) => {
+    $("#btnProjectSave").on('click',
+        function () {
+            var model = {};
+            model.ProjectName = $('#ProjectName').val();
+            model.ProjectDescription = $('#ProjectDesc').val();
 
-            if (response.status == 1) {
-                $("#projectAddModal").modal('toggle');
-                $('#ProjectName').val('');
-                $('#ProjectDesc').val('');
+            AjaxPostJsonModel("/Project/Add", model).then((response) => {
 
+                if (response.status == 1) {
+                    $("#projectAddModal").modal('toggle');
+                    $('#ProjectName').val('');
+                    $('#ProjectDesc').val('');
 
-                $.ajax({
-                    url: '/Project/ProjectGet',
-                    type: "GET",
-                    processData: false,
-                    cache: false,
-                    beforeSend: function () {
+                    $.ajax({
+                        url: '/Project/ProjectGet',
+                        type: "GET",
+                        processData: false,
+                        cache: false,
+                        beforeSend: function () {
 
-                    },
-                    success: function (data) {
-                        $("#projectDataTable").html('');
-                        $("#projectDataTable").html(data);
+                        },
+                        success: function (data) {
+                            $("#projectDataTable").html('');
+                            $("#projectDataTable").html(data);
 
-                    },
-                    complete: function () {
+                        },
+                        complete: function () {
 
-                    }
-                });
+                        }
+                    });
 
-            }
+                }
+            });
+
         });
+}
 
-    });
+
+
+
+//$("#btnProjectAdd").on('click',
+//    function () {
+//        $("#projectAddModal").modal('toggle');
+//    });
+
+//$("#btnProjectSave").on('click',
+//    function () {
+//        var model = {};
+//        model.ProjectName = $('#ProjectName').val();
+//        model.ProjectDescription = $('#ProjectDesc').val();
+
+//        AjaxPostJsonModel("/Project/Add", model).then((response) => {
+
+//            if (response.status == 1) {
+//                $("#projectAddModal").modal('toggle');
+//                $('#ProjectName').val('');
+//                $('#ProjectDesc').val('');
+
+
+//                $.ajax({
+//                    url: '/Project/ProjectGet',
+//                    type: "GET",
+//                    processData: false,
+//                    cache: false,
+//                    beforeSend: function () {
+
+//                    },
+//                    success: function (data) {
+//                        $("#projectDataTable").html('');
+//                        $("#projectDataTable").html(data);
+
+//                    },
+//                    complete: function () {
+
+//                    }
+//                });
+
+//            }
+//        });
+
+//    });
 
 function Add(id) {
     $("#addProjectNote").modal('toggle');
