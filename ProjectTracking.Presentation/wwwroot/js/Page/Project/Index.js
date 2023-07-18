@@ -43,6 +43,7 @@ $("#btnProjectSave").on('click',
         });
 
     });
+
 function Add(id) {
     $("#addProjectNote").modal('toggle');
 
@@ -91,18 +92,17 @@ function View(id) {
         processData: false,
         cache: false,
         success: function (data) {
-            $("#projectNotes").empty();
-
-            console.log(data);
-
+            var html = '';
             $.each(data,
-                function (index, element) {
-                    var option = $("<td>");
-                    option.val(element.value);
-                    option.text(element.text);
-                    $("#projectNotes").append(option);
-                });
-        }
+            function (index, element) {
+                html += '<tr>';
+                html += '<td>' + element.id + '</td>';
+                html += '<td>' + element.name + '</td>';
+                html += '<td>' + element.desc + '</td>';
+                html += '</tr>'
+            });
+            $('#projectNotes').append(html)
+}
     });
 
 }
@@ -144,45 +144,3 @@ function Delete(id) {
     });
 }
 
-
-
-//$("#btnviewprojectnote").on('click', function () {
-//    $("#viewprojectnote").modal('toggle');
-//    $.ajax({
-//        url: '/ProjectNote/GetProjectNote/' + $(this).val(),
-//        type: 'GET',
-//        processData: false,
-//        cache: false,
-//        success: function (data) {
-//            $("#projectNotes").empty();
-
-//            console.log(data);
-
-//            $.each(data,
-//                function (index, element) {
-//                    var option = $("<td>");
-//                    option.val(element.value);
-//                    option.text(element.text);
-//                    $("#projectNotes").append(option);
-//                });
-//        }
-//    });
-
-//})
-function AjaxPostJsonModel(url, data) {
-    return $.ajax({
-        url: url,
-        data: JSON.stringify(data),
-        type: "POST",
-        dataType: "json",
-        contentType: "application/json; charset=utf-8",
-        processData: false,
-        cache: false,
-        beforeSend: function () {
-
-        },
-        complete: function () {
-
-        }
-    });
-}
