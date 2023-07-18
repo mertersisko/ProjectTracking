@@ -23,39 +23,10 @@
                 <td>@item.ProjectDescription</td>
                 <td>
                     <a onclick="Add(@item.Id)"><i class="fa-solid fa-plus mx-4" style="font-size: 20px; cursor: pointer;"></i></a>
-                    <button type="button" class="btn" data-bs-toggle="modal" id=btnviewprojectnote><i class="fa-solid fa-message"></i></button>
-                    <partial name="LayoutPartials/ProjectNotePartials/_ProjectNoteAddPartial"/>
-                    @*Not Görüntüleme*@
-                    <div class="modal fade" id="viewprojectnote" tabindex="-1" aria-labelledby="exampleModalLabel2" aria-hidden="true">
-                        <div class="modal-dialog modal-xl">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h1 class="modal-title fs-5" id="exampleModalLabel">@item.ProjectName Not Listesi</h1>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                </div>
-                                <div class="modal-body">
-                                    <div class="row">
-                                        <div class="col">
-                                            <table class="table table-hover" id="projectNotes">
-                                                <thead>
-                                                    <tr>
-                                                        <th>@item.ProjectName</th>
-                                                        <th>@item.</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                   
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="modal-footer">
-                                   <p style="text-align:center">Not bilgisi eklenebilir!</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <partial name="LayoutPartials/ProjectNotePartials/_ProjectNoteAddPartial" />
+                    <a onclick="View(@item.Id)"><i class="fa-solid fa-message mx-4" style="font-size: 20px; cursor: pointer;"></i></a>
+                    <partial name="LayoutPartials/ProjectNotePartials/_ProjectNoteListPartial" />
+
                 </td>
             </tr>
         }

@@ -83,7 +83,29 @@ function Add(id) {
 
         });
 }
+function View(id) {
+    $("#viewprojectnote").modal('toggle');
+    $.ajax({
+        url: '/ProjectNote/GetProjectNote/' + id,
+        type: 'GET',
+        processData: false,
+        cache: false,
+        success: function (data) {
+            $("#projectNotes").empty();
 
+            console.log(data);
+
+            $.each(data,
+                function (index, element) {
+                    var option = $("<td>");
+                    option.val(element.value);
+                    option.text(element.text);
+                    $("#projectNotes").append(option);
+                });
+        }
+    });
+
+}
 function Delete(id) {
     Swal.fire({
         title: 'Dikkat !',
@@ -124,29 +146,29 @@ function Delete(id) {
 
 
 
-$("#btnviewprojectnote").on('click', function () {
-    $("#viewprojectnote").modal('toggle');
-    $.ajax({
-        url: '/ProjectNote/GetProjectNote/' + $(this).val(),
-        type: 'GET',
-        processData: false,
-        cache: false,
-        success: function (data) {
-            $("#projectNotes").empty();
+//$("#btnviewprojectnote").on('click', function () {
+//    $("#viewprojectnote").modal('toggle');
+//    $.ajax({
+//        url: '/ProjectNote/GetProjectNote/' + $(this).val(),
+//        type: 'GET',
+//        processData: false,
+//        cache: false,
+//        success: function (data) {
+//            $("#projectNotes").empty();
 
-            console.log(data);
+//            console.log(data);
 
-            $.each(data,
-                function (index, element) {
-                    var option = $("<td>");
-                    option.val(element.value);
-                    option.text(element.text);
-                    $("#projectNotes").append(option);
-                });
-        }
-    });
+//            $.each(data,
+//                function (index, element) {
+//                    var option = $("<td>");
+//                    option.val(element.value);
+//                    option.text(element.text);
+//                    $("#projectNotes").append(option);
+//                });
+//        }
+//    });
 
-})
+//})
 function AjaxPostJsonModel(url, data) {
     return $.ajax({
         url: url,

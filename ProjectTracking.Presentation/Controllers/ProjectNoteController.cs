@@ -30,6 +30,7 @@ public class ProjectNoteController : Controller
     [HttpGet]
     public IActionResult GetProjectNote(int ID)
     {
-        return Ok(_projectNoteService.GetNotes(ID).ToList());
+        var projectNoteList = _projectNoteService.GetNotes(ID).ToList();
+        return Ok(projectNoteList);
     }
 }
