@@ -43,45 +43,46 @@ $("#btnProjectSave").on('click',
         });
 
     });
-$("#noteAddBtn").on('click',
-    function () {
-        var model = {};
-        model.ProjectNoteTitle = $('#noteTitle').val();
-        model.ProjectNoteDescription = $('#noteDesc').val();
-        model.ProjectId = $('#ProjectId').val();
+function Add(id) {
+    $("#addProjectNote").modal('toggle');
 
-        AjaxPostJsonModel("/ProjectNote/Add", model).then((response) => {
+    $("#noteAddBtn").on('click',
+        function () {
+            var model = {};
+            model.ProjectNoteTitle = $('#noteTitle').val();
+            model.ProjectNoteDescription = $('#noteDesc').val();
+            model.ProjectId = id;
 
-            if (response.status == 1) {
-                $("#add-project-note-").modal('toggle');
-                $('#noteTitle').val('');
-                $('#noteDesc').val('');
-                $('#ProjectId').val('');
+            AjaxPostJsonModel("/ProjectNote/Add", model).then((response) => {
 
+                if (response.status == 1) {
+                    $("#addProjectNote").modal('toggle');
+                    $('#noteTitle').val('');
+                    $('#noteDesc').val('');
 
-                $.ajax({
-                    url: '/Project/ProjectGet',
-                    type: "GET",
-                    processData: false,
-                    cache: false,
-                    beforeSend: function () {
+                    $.ajax({
+                        url: '/Project/ProjectGet',
+                        type: "GET",
+                        processData: false,
+                        cache: false,
+                        beforeSend: function () {
 
-                    },
-                    success: function (data) {
-                        $("#projectDataTable").html('');
-                        $("#projectDataTable").html(data);
+                        },
+                        success: function (data) {
+                            $("#projectDataTable").html('');
+                            $("#projectDataTable").html(data);
 
-                    },
-                    complete: function () {
+                        },
+                        complete: function () {
 
-                    }
-                });
+                        }
+                    });
 
-            }
+                }
+            });
+
         });
-
-    });
-
+}
 
 function Delete(id) {
     Swal.fire({
