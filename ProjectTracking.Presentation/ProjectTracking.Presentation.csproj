@@ -20,12 +20,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ProjectTracking.Bussiness\ProjectTracking.Bussiness.csproj" />
-    <ProjectReference Include="..\ProjectTracking.DataAccess\ProjectTracking.DataAccess.csproj" />
+    <Folder Include="Views\ProjectNote\" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Views\ProjectNote\" />
+    <ProjectReference Include="..\ProjectTracking.Bussiness\ProjectTracking.Bussiness.csproj" />
+    <ProjectReference Include="..\ProjectTracking.DataAccess\ProjectTracking.DataAccess.csproj" />
   </ItemGroup>
 
 </Project>

@@ -18,7 +18,7 @@ public class Requisition : BaseEntity
     public string RequisitionDescription { get; set; }
     [DisplayName("Proje")]
     public int? ProjectId { get; set; }
-    public Project? Project { get; set; }
+    public Project Project { get; set; }
     [DisplayName("Durum")]
     public Enums.RequisitionStatus Status { get; set; }
     public int UserId { get; set; }

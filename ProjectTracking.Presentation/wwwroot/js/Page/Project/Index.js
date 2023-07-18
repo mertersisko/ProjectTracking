@@ -43,6 +43,44 @@ $("#btnProjectSave").on('click',
         });
 
     });
+$("#noteAddBtn").on('click',
+    function () {
+        var model = {};
+        model.ProjectNoteTitle = $('#noteTitle').val();
+        model.ProjectNoteDescription = $('#noteDesc').val();
+        model.ProjectId = $('#ProjectId').val();
+
+        AjaxPostJsonModel("/ProjectNote/Add", model).then((response) => {
+
+            if (response.status == 1) {
+                $("#add-project-note-").modal('toggle');
+                $('#noteTitle').val('');
+                $('#noteDesc').val('');
+                $('#ProjectId').val('');
+
+
+                $.ajax({
+                    url: '/Project/ProjectGet',
+                    type: "GET",
+                    processData: false,
+                    cache: false,
+                    beforeSend: function () {
+
+                    },
+                    success: function (data) {
+                        $("#projectDataTable").html('');
+                        $("#projectDataTable").html(data);
+
+                    },
+                    complete: function () {
+
+                    }
+                });
+
+            }
+        });
+
+    });
 
 
 function Delete(id) {
@@ -84,6 +122,30 @@ function Delete(id) {
 }
 
 
+
+$("#btnviewprojectnote").on('click', function () {
+    $("#viewprojectnote").modal('toggle');
+    $.ajax({
+        url: '/ProjectNote/GetProjectNote/' + $(this).val(),
+        type: 'GET',
+        processData: false,
+        cache: false,
+        success: function (data) {
+            $("#projectNotes").empty();
+
+            console.log(data);
+
+            $.each(data,
+                function (index, element) {
+                    var option = $("<td>");
+                    option.val(element.value);
+                    option.text(element.text);
+                    $("#projectNotes").append(option);
+                });
+        }
+    });
+
+})
 function AjaxPostJsonModel(url, data) {
     return $.ajax({
         url: url,

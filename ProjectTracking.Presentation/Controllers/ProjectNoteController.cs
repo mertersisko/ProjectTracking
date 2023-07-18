@@ -18,19 +18,14 @@ public class ProjectNoteController : Controller
 
         return View(noteList.DataList);
     }
-    public IActionResult Add()
-    {
-        return View();
-    }
     [HttpPost]
-    public async Task<IActionResult> Add(ProjectNote model)
+    public async Task<IActionResult> Add([FromBody]ProjectNote model)
     {
         if (!ModelState.IsValid)
             return View(model);
 
-        await _projectNoteService.Add(model);
-
-        return View(model);
+        var result = await _projectNoteService.Add(model);
+        return Ok(result);
     }
     [HttpGet]
     public IActionResult GetProjectNote(int ID)

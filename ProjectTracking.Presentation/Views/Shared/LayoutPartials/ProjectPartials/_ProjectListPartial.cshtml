@@ -24,7 +24,7 @@
                 <td>
                     <button type="button" class="btn" data-bs-toggle="modal" data-bs-target=@("#add-project-note-" + item.Id)><i class="fa-solid fa-pencil"></i></button>
 
-                    <button type="button" class="btn" data-bs-toggle="modal" data-bs-target=@("#view-project-note-" + item.Id)><i class="fa-solid fa-message"></i></button>
+                    <button type="button" class="btn" data-bs-toggle="modal" id=btnviewprojectnote><i class="fa-solid fa-message"></i></button>
                     @*Note ekleme modal*@
                     <div class="modal fade" id="add-project-note-@item.Id" tabindex="-1" aria-labelledby="exampleModalLabel1" aria-hidden="true">
                         <div class="modal-dialog">
@@ -34,8 +34,7 @@
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body">
-                                    <form>
-                                        <input type="hidden" id="ProjectId" value="@item.Id" />
+                                        <input type="text" id="ProjectId" value="@item.Id" />
                                         <div class="mb-3">
                                             <label class="col-form-label">Not Başlığı</label>
                                             <input type="text" class="form-control" id="noteTitle">
@@ -44,17 +43,16 @@
                                             <label class="col-form-label">Not Açıklaması</label>
                                             <textarea class="form-control" id="noteDesc"></textarea>
                                         </div>
-                                    </form>
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">İptal</button>
                                     <button type="button" class="btn btn-primary" id="noteAddBtn">Kaydet</button>
                                 </div>
                             </div>
                         </div>
                     </div>
                     @*Not Görüntüleme*@
-                    <div class="modal fade" id="view-project-note-@item.ProjectNotes" tabindex="-1" aria-labelledby="exampleModalLabel2" aria-hidden="true">
+                    <div class="modal fade" id="viewprojectnote" tabindex="-1" aria-labelledby="exampleModalLabel2" aria-hidden="true">
                         <div class="modal-dialog modal-xl">
                             <div class="modal-content">
                                 <div class="modal-header">
@@ -64,21 +62,22 @@
                                 <div class="modal-body">
                                     <div class="row">
                                         <div class="col">
-                                            <input type="hidden" id="@item.Id" />
                                             <table class="table table-hover" id="projectNotes">
                                                 <thead>
                                                     <tr>
-                                                        <th>Başlık</th>
-                                                        <th>Açıklama</th>
+                                                        <th>@item.ProjectName</th>
+                                                        <th>@item.</th>
                                                     </tr>
                                                 </thead>
+                                                <tbody>
+                                                   
+                                                </tbody>
                                             </table>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                    <button type="button" class="btn btn-primary" id="noteAddBtn">Kaydet</button>
+                                   <p style="text-align:center">Not bilgisi eklenebilir!</p>
                                 </div>
                             </div>
                         </div>

@@ -10,9 +10,7 @@ namespace ProjectTracking.Presentation.Controllers;
 
 public class ProjectController : Controller
 {
-    private readonly ProjectTrackingDataContext _dataContext;
     private readonly IProjectService _projectService;
-    private readonly IRequisitionService _requisitionService;
 
     public ProjectController(IProjectService projectService)
     {
