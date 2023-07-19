@@ -23,7 +23,7 @@
                 <td>@item.ProjectDescription</td>
                 <td>
                     <a onclick="NoteAdd(@item.Id)"><i class="fa-solid fa-plus mx-4" style="font-size: 20px; cursor: pointer;"></i></a>
-                    <partial name="LayoutPartials/ProjectNotePartials/_ProjectNoteAddPartial" />
+                    <partial name="LayoutPartials/ProjectNotePartials/_ProjectNoteAddPartial" model="@item.Id" />
                     <a onclick="View(@item.Id)"><i class="fa-solid fa-message mx-4" style="font-size: 20px; cursor: pointer;"></i></a>
                     <partial name="LayoutPartials/ProjectNotePartials/_ProjectNoteListPartial" />
 

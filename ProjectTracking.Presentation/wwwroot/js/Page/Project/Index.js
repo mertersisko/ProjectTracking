@@ -2,8 +2,6 @@
     $('#projectDataTable').DataTable();
 });
 
-
-
 function ProjectAdd() {
     $("#projectAddModal").modal('toggle');
 
@@ -45,19 +43,21 @@ function ProjectAdd() {
 }
 function NoteAdd(id) {
     $("#addProjectNote").modal('toggle');
+    $("#ProjectId").val(id);
 
     $("#noteAddBtn").on('click',
         function () {
             var model = {};
             model.ProjectNoteTitle = $('#noteTitle').val();
             model.ProjectNoteDescription = $('#noteDesc').val();
-            model.ProjectId = id;
+            model.ProjectId = $('#ProjectId').val();
 
             AjaxPostJsonModel("/ProjectNote/Add", model).then((response) => {
 
                 if (response.status == 1) {
                     $("#addProjectNote").modal('toggle');
                     $('#noteTitle').val('');
+                    $("#ProjectId").val('')
                     $('#noteDesc').val('');
 
                     $.ajax({
@@ -71,13 +71,11 @@ function NoteAdd(id) {
                         success: function (data) {
                             $("#projectDataTable").html('');
                             $("#projectDataTable").html(data);
-
                         },
                         complete: function () {
 
                         }
                     });
-
                 }
             });
 
