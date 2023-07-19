@@ -1,10 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using ProjectTracking.Bussiness.Repositories.Classes.ProjectServices.Abstract;
-using ProjectTracking.Bussiness.Repositories.Classes.RequisitionServices.Abstract;
-using ProjectTracking.DataAccess.Context;
 using ProjectTracking.DataAccess.Entites.Classes.DbClasses.ProjectClasses;
-using ProjectTracking.DataAccess.Entites.Classes.ViewModel;
 
 namespace ProjectTracking.Presentation.Controllers;
 
