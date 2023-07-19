@@ -2,49 +2,49 @@
     $('#projectDataTable').DataTable();
 });
 
-function ProjectAdd() {
-    $("#projectAddModal").modal('toggle');
 
-    $("#btnProjectSave").on('click',
-        function () {
-            var model = {};
-            model.ProjectName = $('#ProjectName').val();
-            model.ProjectDescription = $('#ProjectDesc').val();
+$("#btnProjectAdd").on('click',
+    function () {
+        $("#projectAddModal").modal('toggle');
+    });
 
-            AjaxPostJsonModel("/Project/Add", model).then((response) => {
+$("#btnProjectSave").on('click',
+    function () {
+        var model = {};
+        model.ProjectName = $('#ProjectName').val();
+        model.ProjectDescription = $('#ProjectDesc').val();
 
-                if (response.status == 1) {
-                    $("#projectAddModal").modal('toggle');
-                    $('#ProjectName').val('');
-                    $('#ProjectDesc').val('');
+        AjaxPostJsonModel("/Project/Add", model).then((response) => {
 
-                    $.ajax({
-                        url: '/Project/ProjectGet',
-                        type: "GET",
-                        processData: false,
-                        cache: false,
-                        beforeSend: function () {
+            if (response.status == 1) {
+                $("#projectAddModal").modal('toggle');
+                $('#ProjectName').val('');
+                $('#ProjectDesc').val('');
 
-                        },
-                        success: function (data) {
-                            $("#projectDataTable").html('');
-                            $("#projectDataTable").html(data);
+                $.ajax({
+                    url: '/Project/ProjectGet',
+                    type: "GET",
+                    processData: false,
+                    cache: false,
+                    beforeSend: function () {
 
-                        },
-                        complete: function () {
+                    },
+                    success: function (data) {
+                        $("#projectDataTable").html('');
+                        $("#projectDataTable").html(data);
+                    },
+                    complete: function () {
 
-                        }
-                    });
+                    }
+                });
 
-                }
-            });
-
+            }
         });
-}
+
+    });
 function NoteAdd(id) {
     $("#addProjectNote").modal('toggle');
     $("#ProjectId").val(id);
-
     $("#noteAddBtn").on('click',
         function () {
             var model = {};
@@ -142,3 +142,20 @@ function Delete(id) {
     });
 }
 
+function AjaxPostJsonModel(url, data) {
+    return $.ajax({
+        url: url,
+        data: JSON.stringify(data),
+        type: "POST",
+        dataType: "json",
+        contentType: "application/json; charset=utf-8",
+        processData: false,
+        cache: false,
+        beforeSend: function () {
+
+        },
+        complete: function () {
+
+        }
+    });
+}
