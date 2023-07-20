@@ -237,4 +237,34 @@ public class UserService : IUserService
         return user;
 
     }
+
+    public async Task<BaseResponse<User>> GetListAsync()
+    {
+        var user = await _dataContext.Users.ToListAsync();
+
+        return new BaseResponse<User>
+        {
+            DataList = user
+        };
+    }
+    public async Task<BaseResponse<User>> ChangeStatus(int id)
+    {
+        var result = await GetById(id);
+
+        if(result.Data != null)
+        {
+            result.Data.Active = !result.Data.Active;
+            return await Update(result.Data);
+        }
+        return new BaseResponse<User>
+        {
+            Status = ResultStatus.Error,
+            Data = null
+        };
+    }
 }
+
+
+
+    
+

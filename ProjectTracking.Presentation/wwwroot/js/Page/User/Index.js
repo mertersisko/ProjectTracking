@@ -109,7 +109,31 @@ function Delete(id) {
         }
     });
 }
+function ChangeStatusWithPartialView(id) {
 
+    AjaxPostJsonModel("/User/ChangeStatus/" + id).then((response) => {
+
+        $.ajax({
+            url: '/User/UserGet',
+            type: "GET",
+            processData: false,
+            cache: false,
+            beforeSend: function () {
+
+            },
+            success: function (data) {
+                $("#userDataTable").html('');
+                $("#userDataTable").html(data);
+
+            },
+            complete: function () {
+
+            }
+        });
+
+    });
+
+}
 
 
 //function Update(id) {

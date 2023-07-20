@@ -11,4 +11,6 @@ public interface IUserService : IBaseService<User>
     public bool IsTheUserPresent(string UserMail, int? id);
     public Task<BaseResponse<User>>DeleteById(int id);
     public User Login(LoginDto model);
+    public Task<BaseResponse<User>> GetListAsync();
+    public Task<BaseResponse<User>> ChangeStatus(int id);
 }

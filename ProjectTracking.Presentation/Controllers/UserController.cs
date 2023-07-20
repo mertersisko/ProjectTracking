@@ -1,10 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using ProjectTracking.Bussiness.Repositories.Classes.UserServices.Abstract;
 using ProjectTracking.Bussiness.Session;
-using ProjectTracking.DataAccess.Context;
 using ProjectTracking.DataAccess.Entites.Classes.DbClasses.UserClasses;
 using ProjectTracking.DataAccess.Entites.Classes.DtoClasses.LoginDto;
+using ProjectTracking.DataAccess.Entites.ResponseEntites;
 using ProjectTracking.Presentation.Filter;
 
 namespace ProjectTracking.Presentation.Controllers;
@@ -20,7 +19,7 @@ public class UserController : Controller
     }
     public async Task<IActionResult> Index()
     {
-        var UserList = await _userService.ActiveUsers();
+        var UserList = await _userService.GetListAsync();
         return View(UserList.DataList);
     }
     [Auth]
@@ -103,10 +102,17 @@ public class UserController : Controller
     [HttpGet]
     public async Task<IActionResult> UserGet()
     {
-        var currentUser = await _userService.ActiveUsers();
+        var currentUser = await _userService.GetListAsync();
 
         return PartialView("LayoutPartials/UserPartials/_UserListPartial", currentUser.DataList);
     }
+    public async Task<IActionResult>ChangeStatus(int id)
+    {
+      var result = await _userService.ChangeStatus(id);
+
+        return Ok(result);
+    }
+
 
 }
 
